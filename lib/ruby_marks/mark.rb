@@ -9,8 +9,10 @@ module RubyMarks
       @distance_from_previous = params[:distance_from_previous]
     end
 
-    def marked?
-      intensity >= group.recognizer.config.intensity_percentual if image_str
+    def marked?(intensity_percentage)
+      return unless image_str
+
+      intensity >= intensity_percentage
     end
 
     def intensity
@@ -23,10 +25,6 @@ module RubyMarks
       end
 
       colors.count('.') * 100 / colors.size
-    end
-
-    def unmarked?
-      !marked?
     end
 
     def value
